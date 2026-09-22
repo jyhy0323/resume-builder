@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume & Portfolio Builder - Toss Style</title>
+    <!-- Pretendard 웹폰트 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        /* ==========================================================================
+           TOSS UI SYSTEM STYLING
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #f2f4f6;
+            color: #191f28;
+            line-height: 1.6;
+            letter-spacing: -0.02em;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        /* 1. 토스 시그니처 헤더 */
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .toss-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #e8f3ff;
+            color: #1b64da;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #191f28;
+            line-height: 1.35;
+            margin-bottom: 12px;
+            letter-spacing: -0.03em;
+            word-break: keep-all;
+        }
+
+        .header .subtitle {
+            font-size: 1.15rem;
+            color: #4e5968;
+            font-weight: 500;
+            word-break: keep-all;
+        }
+
+        /* 2. 메인 그리드 레이아웃 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* 3. 토스 스타일 카드 */
+        .toss-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 36px 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 26px;
+        }
+
+        .card-title h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #191f28;
+            letter-spacing: -0.02em;
+        }
+
+        .card-step-badge {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #3182f6;
+            background-color: #f2f4f6;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        /* 4. 폼 필드 스타일 */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #333d4b;
+            margin-bottom: 8px;
+        }
+
+        .required-star {
+            color: #f04452;
+            margin-left: 2px;
+        }
+
+        .helper-text {
+            font-size: 0.82rem;
+            color: #8b95a1;
+            font-weight: 400;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px 18px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1.5px solid #e5e8eb;
+            border-radius: 16px;
+            background-color: #f9fafb;
+            color: #191f28;
+            font-family: inherit;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: #b0b8c1;
+            font-weight: 400;
+        }
+
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            background-color: #ffffff;
+            border-color: #3182f6;
+            box-shadow: 0 0 0 4px rgba(49, 130, 246, 0.14);
+        }
+
+        textarea {
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        /* 5. 토스 세그먼트 셀렉터 (프롬프트 A / B 선택) */
+        .segmented-control {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            background-color: #f2f4f6;
+            padding: 6px;
+            border-radius: 18px;
+        }
+
+        .segmented-option {
+            cursor: pointer;
+            text-align: center;
+            padding: 12px 8px;
+            border-radius: 14px;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            user-select: none;
+            border: 1.5px solid transparent;
+        }
+
+        .segmented-option input[type="radio"] {
+            display: none;
+        }
+
+        .segmented-option .opt-title {
+            display: block;
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: #6b7684;
+            margin-bottom: 2px;
+        }
+
+        .segmented-option .opt-sub {
+            display: block;
+            font-size: 0.78rem;
+            color: #8b95a1;
+        }
+
+        /* 선택되었을 때 토스 하이라이트 카드 효과 */
+        .segmented-option:has(input[type="radio"]:checked) {
+            background-color: #ffffff;
+            border-color: rgba(49, 130, 246, 0.2);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        }
+
+        .segmented-option:has(input[type="radio"]:checked) .opt-title {
+            color: #3182f6;
+        }
+
+        .segmented-option:has(input[type="radio"]:checked) .opt-sub {
+            color: #4e5968;
+        }
+
+        /* 6. 토스 블루 메인 버튼 */
+        .btn-toss-primary {
+            width: 100%;
+            background-color: #3182f6;
+            color: #ffffff;
+            font-size: 1.12rem;
+            font-weight: 700;
+            padding: 18px;
+            border-radius: 18px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(49, 130, 246, 0.28);
+            transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+            margin-top: 10px;
+        }
+
+        .btn-toss-primary:hover {
+            background-color: #1b64da;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(49, 130, 246, 0.36);
+        }
+
+        .btn-toss-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-toss-primary:disabled {
+            background-color: #d1d6db;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 7. 상단 복사 & 다운로드 버튼 */
+        .btn-toss-secondary {
+            background-color: #f2f4f6;
+            color: #333d4b;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 9px 14px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-toss-secondary:hover {
+            background-color: #e5e8eb;
+            color: #191f28;
+        }
+
+        /* 8. 상태 상자 */
+        .placeholder-box {
+            text-align: center;
+            padding: 85px 24px;
+            color: #8b95a1;
+            background-color: #f9fafb;
+            border: 2px dashed #e5e8eb;
+            border-radius: 20px;
+            font-size: 0.98rem;
+            line-height: 1.65;
+        }
+
+        .placeholder-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .loading-box {
+            text-align: center;
+            padding: 75px 20px;
+            background-color: #f9fafb;
+            border-radius: 20px;
+        }
+
+        .spinner {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 20px auto;
+            border: 5px solid #e5e8eb;
+            border-top: 5px solid #3182f6;
+            border-radius: 50%;
+            animation: tossSpin 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes tossSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #191f28;
+            margin-bottom: 6px;
+        }
+
+        .loading-subtext {
+            font-size: 0.92rem;
+            color: #8b95a1;
+        }
+
+        .alert-box {
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            background-color: #feecee;
+            color: #f04452;
+            border: 1px solid #fdd0d4;
+            font-weight: 600;
+        }
+
+        /* 9. 결과 출력창 */
+        .result-container {
+            background-color: #ffffff;
+            border: 1.5px solid #e5e8eb;
+            border-radius: 20px;
+            padding: 28px;
+            max-height: 680px;
+            overflow-y: auto;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        #resultOutput {
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #191f28;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 1. 토스 스타일 상단 헤더 -->
+        <header class="header">
+            <div class="toss-badge">✨ AI Career Builder AI Career Builder</div>
+            <h1>내 경력을 쏙 넣으면,<br>AI가 완성도 높은 이력서를 써드려요</h1>
+            <p class="subtitle">복잡한 양식 고민은 끝. Gemini AI가 채용 담당자의 눈을 사로잡는 이력서와 포트폴리오를 작성합니다.</p>
+        </header>
+
+        <!-- 2. 메인 양방향 카드 영역 -->
+        <main class="main-content">
+            <!-- 왼쪽: 정보 입력 카드 -->
+            <section class="toss-card">
+                <div class="card-title">
+                    <h2>📝 정보 입력하기</h2>
+                    <span class="card-step-badge">STEP 01</span>
+                </div>
+
+                <form id="resumeForm">
+                    <!-- 이름 -->
+                    <div class="form-group">
+                        <label for="name">
+                            <span>이름<span class="required-star">*</span></span>
+                            <span class="helper-text">지원자 실명</span>
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="예: 홍길동" required>
+                    </div>
+
+                    <!-- 희망 직무 -->
+                    <div class="form-group">
+                        <label for="jobTitle">
+                            <span>지원 희망 직무<span class="required-star">*</span></span>
+                            <span class="helper-text">채용 공고 직무</span>
+                        </label>
+                        <input type="text" id="jobTitle" name="job_title" placeholder="예: 백엔드 파이썬 개발자, 서비스 기획자" required>
+                    </div>
+
+                    <!-- 어조(Tone) -->
+                    <div class="form-group">
+                        <label for="tone">
+                            <span>작성 어조 및 문체</span>
+                            <span class="helper-text">원하는 분위기 선택</span>
+                        </label>
+                        <select id="tone" name="tone">
+                            <option value="전문적이고 신뢰감 있는">전문적이고 신뢰감 있는 (기본 추천)</option>
+                            <option value="열정적이고 도전적인">열정적이고 진취적인 스타일</option>
+                            <option value="명확하고 군더더기 없는 간결한">명확하고 핵심만 요약한 스타일</option>
+                            <option value="창의적이고 문제 해결 중심의">혁신적이고 문제 해결 중심 스타일</option>
+                        </select>
+                    </div>
+
+                    <!-- 토스 세그먼트 셀렉터 (프롬프트 A vs B) -->
+                    <div class="form-group">
+                        <label>
+                            <span>작성 모드 (Prompt Type)<span class="required-star">*</span></span>
+                            <span class="helper-text">이력서 구성 방식</span>
+                        </label>
+                        <div class="segmented-control">
+                            <label class="segmented-option">
+                                <input type="radio" name="prompt_type" value="general" checked>
+                                <span class="opt-title">📄 일반 모드</span>
+                                <span class="opt-sub">균형 잡힌 표준 이력서</span>
+                            </label>
+                            <label class="segmented-option">
+                                <input type="radio" name="prompt_type" value="expert">
+                                <span class="opt-title">🚀 전문가 모드</span>
+                                <span class="opt-sub">STAR 성과 지표 강조</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 경력 사항 -->
+                    <div class="form-group">
+                        <label for="experience">
+                            <span>주요 경력 및 핵심 역량<span class="required-star">*</span></span>
+                            <span class="helper-text">회사명, 담당 업무, 기술 스택</span>
+                        </label>
+                        <textarea id="experience" name="experience" rows="5" placeholder="근무 기간, 담당 역할, 주로 다루었던 핵심 기술과 역량을 자유롭게 적어주세요." required></textarea>
+                    </div>
+
+                    <!-- 프로젝트 경험 -->
+                    <div class="form-group">
+                        <label for="projects">
+                            <span>주요 프로젝트 경험<span class="required-star">*</span></span>
+                            <span class="helper-text">진행했던 프로젝트 내용</span>
+                        </label>
+                        <textarea id="projects" name="projects" rows="6" placeholder="프로젝트 이름, 해결하려 했던 과제, 내가 기여한 내용과 성과를 적어주세요." required></textarea>
+                    </div>
+
+                    <!-- 생성 버튼 -->
+                    <button type="submit" id="submitBtn" class="btn-toss-primary">
+                        ✨ 3초 만에 AI 이력서 만들기
+                    </button>
+                </form>
+            </section>
+
+            <!-- 오른쪽: 결과 확인 카드 -->
+            <section class="toss-card">
+                <div class="card-title">
+                    <h2>📄 생성된 결과물</h2>
+                    <!-- 복사 및 다운로드 버튼 그룹 -->
+                    <div class="action-buttons" id="actionButtons" style="display: none; gap: 8px;">
+                        <button type="button" id="copyBtn" class="btn-toss-secondary">📋 결과 복사</button>
+                        <button type="button" id="downloadBtn" class="btn-toss-secondary">💾 Markdown 다운로드</button>
+                    </div>
+                </div>
+
+                <!-- 안내 박스 (초기 상태) -->
+                <div id="placeholderMessage" class="placeholder-box">
+                    <span class="placeholder-icon">💡</span>
+                    <p>왼쪽 폼에 기본 정보를 입력하고<br><strong>[3초 만에 AI 이력서 만들기]</strong>를 눌러보세요.<br>Gemini AI가 만든 맞춤형 이력서가 이곳에 나타납니다.</p>
+                </div>
+
+                <!-- 로딩 스피너 (작성 중) -->
+                <div id="loadingIndicator" class="loading-box" style="display: none;">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Gemini AI가 이력서를 정성껏 쓰고 있어요</p>
+                    <p class="loading-subtext">약 5초~10초 정도 걸려요. 잠시만 기다려 주세요!</p>
+                </div>
+
+                <!-- 오류 알림 -->
+                <div id="errorBox" class="alert-box" style="display: none;">
+                    <strong>안내:</strong> <span id="errorMessage"></span>
+                </div>
+
+                <!-- 결과물 출력 상자 -->
+                <div id="resultContainer" class="result-container" style="display: none;">
+                    <pre id="resultOutput"></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 스크립트 연결 -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

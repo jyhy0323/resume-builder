@@ -1,0 +1,446 @@
+/* ==========================================================================
+   AI Resume & Portfolio Builder - Jade & Nature Theme (style.css)
+   평온하고 싱그러운 비취색(Jade) 톤과 커리어 성장을 상징하는 나무 모티브
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --jade-50: #f0fdf7;
+    --jade-100: #e0f9ee;
+    --jade-200: #c1f2dc;
+    --jade-300: #8ee4c2;
+    --jade-400: #49cba1;
+    --jade-500: #10b981;
+    --jade-600: #059669;
+    --jade-700: #047857;
+    --jade-800: #065f46;
+    --jade-900: #064e3b;
+    --jade-deep: #033628;
+    --surface: #ffffff;
+    --bg-color: #f2f8f5;
+    --border-color: #d1e7dd;
+    --text-main: #132a22;
+    --text-sub: #4b6358;
+    --text-muted: #7c988c;
+}
+
+body {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(5, 150, 105, 0.06) 0%, transparent 45%);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding: 40px 20px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+/* 1. 헤더 & 나무 일러스트 영역 */
+.header {
+    text-align: center;
+    margin-bottom: 38px;
+    position: relative;
+}
+
+.tree-badge-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.tree-illustration {
+    width: 140px;
+    height: 120px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 6px 12px rgba(6, 95, 70, 0.12));
+    transition: transform 0.3s ease;
+}
+
+.tree-illustration:hover {
+    transform: translateY(-3px) scale(1.03);
+}
+
+.jade-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--jade-100);
+    color: var(--jade-800);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border: 1px solid var(--jade-200);
+    letter-spacing: -0.01em;
+}
+
+.header h1 {
+    font-size: 2.35rem;
+    font-weight: 800;
+    color: var(--jade-deep);
+    line-height: 1.35;
+    margin-bottom: 10px;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+}
+
+.header .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-sub);
+    font-weight: 500;
+    word-break: keep-all;
+}
+
+/* 2. 메인 2분할 레이아웃 */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+@media (max-width: 960px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+    .header h1 {
+        font-size: 1.95rem;
+    }
+}
+
+/* 3. 비취색 무드의 카드 레이아웃 */
+.jade-card {
+    background: var(--surface);
+    border-radius: 22px;
+    padding: 34px 30px;
+    border: 1.5px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(6, 78, 59, 0.05), 0 2px 6px rgba(6, 78, 59, 0.02);
+    transition: border-color 0.25s ease;
+}
+
+.jade-card:hover {
+    border-color: var(--jade-300);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 26px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid var(--jade-100);
+}
+
+.card-header h2 {
+    font-size: 1.38rem;
+    font-weight: 800;
+    color: var(--jade-deep);
+    letter-spacing: -0.02em;
+}
+
+.card-step-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--jade-700);
+    background-color: var(--jade-100);
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--jade-200);
+}
+
+/* 4. 폼 요소 스타일링 */
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.required {
+    color: #e11d48;
+    margin-left: 2px;
+}
+
+.helper-text {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    background-color: #fbfdfc;
+    color: var(--text-main);
+    font-family: inherit;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+    color: #9cb5a8;
+    font-weight: 400;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    background-color: #ffffff;
+    border-color: var(--jade-600);
+    box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15);
+}
+
+textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+select {
+    cursor: pointer;
+}
+
+/* 5. 프롬프트 모드 셀렉터 */
+.prompt-mode-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background-color: var(--jade-50);
+    padding: 8px;
+    border-radius: 16px;
+    border: 1px solid var(--jade-100);
+}
+
+.mode-option {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background-color: transparent;
+    border: 1.5px solid transparent;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.mode-option input[type="radio"] {
+    display: none;
+}
+
+.mode-option .opt-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    margin-bottom: 3px;
+}
+
+.mode-option .opt-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.mode-option:has(input[type="radio"]:checked) {
+    background-color: #ffffff;
+    border-color: var(--jade-400);
+    box-shadow: 0 4px 12px rgba(6, 95, 70, 0.08);
+}
+
+.mode-option:has(input[type="radio"]:checked) .opt-title {
+    color: var(--jade-700);
+}
+
+.mode-option:has(input[type="radio"]:checked) .opt-desc {
+    color: var(--text-sub);
+}
+
+/* 6. 싱그러운 비취색 메인 버튼 */
+.btn-jade-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 17px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(5, 150, 105, 0.28);
+    transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-jade-primary:hover {
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(5, 150, 105, 0.36);
+}
+
+.btn-jade-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-jade-primary:disabled {
+    background: #a3c2b5;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 7. 상단 복사 & 다운로드 버튼 */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-jade-secondary {
+    background-color: var(--jade-50);
+    color: var(--jade-800);
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--jade-200);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-jade-secondary:hover {
+    background-color: var(--jade-100);
+    border-color: var(--jade-300);
+    color: var(--jade-900);
+}
+
+/* 8. 상태 상자 (안내, 로딩, 오류) */
+.placeholder-box {
+    text-align: center;
+    padding: 75px 24px;
+    color: var(--text-sub);
+    background-color: #fbfdfc;
+    border: 2px dashed var(--jade-200);
+    border-radius: 18px;
+    font-size: 0.98rem;
+    line-height: 1.65;
+}
+
+.placeholder-tree-icon {
+    font-size: 2.6rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.placeholder-box strong {
+    color: var(--jade-700);
+}
+
+.loading-box {
+    text-align: center;
+    padding: 65px 20px;
+    background-color: #fbfdfc;
+    border-radius: 18px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 18px auto;
+    border: 5px solid var(--jade-100);
+    border-top: 5px solid var(--jade-600);
+    border-radius: 50%;
+    animation: jadeSpin 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes jadeSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--jade-deep);
+    margin-bottom: 6px;
+}
+
+.loading-subtext {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.alert-box {
+    padding: 15px 18px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    font-size: 0.94rem;
+    background-color: #fff1f2;
+    color: #be123c;
+    border: 1px solid #fecdd3;
+    font-weight: 600;
+}
+
+/* 9. 결과 출력창 */
+.result-container {
+    background-color: #ffffff;
+    border: 1.5px solid var(--jade-200);
+    border-radius: 18px;
+    padding: 28px;
+    max-height: 680px;
+    overflow-y: auto;
+    box-shadow: inset 0 2px 6px rgba(6, 78, 59, 0.02);
+}
+
+.result-container::-webkit-scrollbar {
+    width: 8px;
+}
+.result-container::-webkit-scrollbar-thumb {
+    background-color: var(--jade-200);
+    border-radius: 4px;
+}
+.result-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+#resultOutput {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-main);
+}
