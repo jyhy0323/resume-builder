@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Career & Resume Builder - Jade Theme</title>
+    <!-- PWA 메타 태그 및 매니페스트 연결 -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#059669">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ResumeAI">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
     <!-- Pretendard 웹폰트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
@@ -632,5 +639,16 @@
 
     <!-- 스크립트 연결 -->
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <!-- PWA Service Worker 등록 스크립트 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('PWA ServiceWorker 등록 성공:', reg.scope))
+                    .catch(err => console.warn('PWA ServiceWorker 등록 실패:', err));
+            });
+        }
+    </script>
 </body>
 </html>

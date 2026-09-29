@@ -31,6 +31,15 @@ def get_gemini_client():
 def index():
     return render_template("index.html")
 
+# PWA Service Worker 및 Manifest 라우트
+@app.route("/sw.js")
+def service_worker():
+    return app.send_static_file("sw.js")
+
+@app.route("/manifest.json")
+def manifest():
+    return app.send_static_file("manifest.json")
+
 # 이력서 및 포트폴리오 생성 API 라우트
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -112,9 +121,10 @@ def generate():
 
     # 6. Gemini API 호출
     try:
-        # 최신 Gemini Flash 모델 우선 호출 및 폴백 체인
+        # 최신 Gemini Pro / Flash 모델 우선 호출 및 폴백 체인
         response = None
         models_to_try = [
+            "gemini-3.8-pro",
             "gemini-3.8-flash",
             "gemini-3.7-flash",
             "gemini-3.6-flash",
